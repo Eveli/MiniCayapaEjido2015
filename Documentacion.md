@@ -71,15 +71,15 @@ Pasos para canaimizar debian 8 nombre código Jessie
 
 	.1. Configurar el nombre del usuario en git
 		
-		```sh
-		$ git config --global user.name "Nombre Apellido"
-		```
+	```sh
+	$ git config --global user.name "Nombre Apellido"
+	```
 
 	.2. Configurar el correo del usuario en git
 		
-		```sh
-		$ git config --global user.email "usuario@correo.dom"
-		```
+	```sh
+	$ git config --global user.email "usuario@correo.dom"
+	```
 
 	>NOTA: Ninguna de estas configuraciones debe hacer como ROOT
 
