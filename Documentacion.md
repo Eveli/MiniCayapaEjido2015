@@ -56,57 +56,75 @@ Pasos para canaimizar debian 8 nombre código Jessie
 10. Crear un repositorio en git con el nombre del paquete seleccionado e importar el codigo pegando la dirección copiada en el paso anterior. Copiar la ruta del repositorio ahora creado, para clonarlo en nuestro equipo.
 
 11. Crear un carpeta donde se descagarán los paquetes a probar
+	
 	```sh
 	$ mkdir paquetes
 	```
+
 12. Entrar a la carpeta
+	
 	```sh
 	$ cd paquetes
 	```
+
 13.  CONFIGURAR GIT 
 
 	.1. Configurar el nombre del usuario en git
+		
 		```sh
-		$ git config --global user.name "Francisco Guerrero"
+		$ git config --global user.name "Nombre Apellido"
 		```
+
 	.2. Configurar el correo del usuario en git
+		
 		```sh
-		$ git config --global user.email "jsfrncscg@gmail.com"
+		$ git config --global user.email "usuario@correo.dom"
 		```
-	NOTA: Ninguna de estas configuraciones debe hacer como ROOT
+
+	>NOTA: Ninguna de estas configuraciones debe hacer como ROOT
 
 14. Clonar el repositorio del paquete
+	
 	```sh
 	$ git clone RUTA
 	```
+
 15. A partir de aca empiezan a realizar los cambios respectivos para arreglar los problemas que impiden la instalacion del paquete. Durante este proceso lo mas comun es hacer lo siguiente: 
 
 	.1. Modificar el paquete en la carpeta de codificación debian->control
 
 	.2. Agregar los cambios al repositorio local
+		
 		```sh	
 		$ git add .
 		```
+
 	.3. Descripción de los cambios realizados
+		
 		```sh
 		$ git commit -a
 		```
+
 16. Una vez guardados los cambios y realizado el commit es necesario actualizar la versión del paquete. Para eso colocamos lo siguiente: 
 
 	.1. ACTUALIZAR CHANGELOG DEL PAQUETE
+		
 		```sh
 		$ gbp dch --new-version="X.Y" --release --auto --id-length=7 --full --commit --git-author
 		```
+
 17. Crear carpeta comprimida del codigo fuente (orig.tar.gz)
 
 Previamente hay que exportar ciertas variables de entorno
 
 	.1. EXPORTAR NOMBRE DEL PAQUETE Y NUMERO DE VERSION
+		
 		```sh
 		$ export PKGNAME=$(dpkg-parsechangelog | grep-dctrl -esSource . | awk -F' ' '{print $2}')
 		export VERSION=$(dpkg-parsechangelog | grep-dctrl -esVersion . | awk -F' ' '{print $2}')
 		export ORIGVER=$( echo $VERSION | sed 's/-.*//g' )
 		```
+
 	.2. CREAR ORIG
 
 		```sh
