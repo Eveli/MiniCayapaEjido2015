@@ -9,21 +9,28 @@ Pasos para canaimizar debian 8 nombre código Jessie
 		deb http://[REPO]/canaima kukenan main 
 	```
 
-	NOTA: Si los repositorios a los que se va a conectar estan almacenados en un dispositivo local, la ruta sera algo como:
+	>NOTA: Si los repositorios a los que se va a conectar estan almacenados en un dispositivo local, la ruta sera algo como:
 	```sh
-		deb file:///[REPO]/debian jessie main contrib non-free 
+	deb file:///[REPO]/debian jessie main contrib non-free 
 	```
 
 3. Actualizar los repositorios
+	
 	```sh
 	# apt update
 	```
+
 4. Instalar el software necesario para las pruebas:
 	>git -> para versionar paquetes fuentes.
+	>
 	>git-buildpackage -> crear los paquetes.
+	>
 	>gdebi -> instalar paquetes.
+	>
 	>build-essential -> dependencias de compilación.
+	>
 	>canaima-llaves -> para que el repositorio valide el paquete.
+	>
 	>ssh -> para conexión con equipos remotos.
 
 	```sh
@@ -101,36 +108,48 @@ Previamente hay que exportar ciertas variables de entorno
 		export ORIGVER=$( echo $VERSION | sed 's/-.*//g' )
 		```
 	.2. CREAR ORIG
+
 		```sh
 		$ tar --anchored --exclude-vcs --exclude "./debian" --exclude "./.sublime" -cvzf ../$( echo $PKGNAME"_"$ORIGVER ).orig.tar.gz --directory=$(pwd) ./
 		```
+
 18. Construir el paquete
+
 	```sh
 	$ gbp buildpackage -tc --git-tag --git-retag -uc -us
 	```
+
 19. Probar el paquete para ver si funciona correctamente
 
 Abrir con gdebi el archivo .deb que se creo y tratar de instalarlo. Si no da problemas procedemos a subirlo al repositorio para que este disponible al público.
 
 20. Subir paquete al repositorio en Github
+
 	```sh
 	$ git push origin master
 	```
+
 21. Subir paquete binario al repositorio
 
 	.1. Copiar el paquete en la maquina del repositorio
+
 		```sh
 		$ scp <<paquete.deb> root@ipmaquina:/RUTA
 		```
 	.2. Conectar por ssh a la maquina del repositorio
+
 		```sh
 		$ ssh usuario@ipmaquina
 		```
+
 	.3. Entrar a la ruta del repositorio
+
 		```sh
 		$ cd RUTA
 		```
+
 	.4. Subir paquete
+
 		```sh
 		$ reprepo includedeb repositorio /RUTA del paquete.deb
 		```
